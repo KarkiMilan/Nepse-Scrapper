@@ -90,7 +90,7 @@ async function scrapeNepseData() {
 
           if (!isLastPage) {
             await nextButton.click();
-            await page.waitForTimeout(TIMEOUT);
+            await page.waitForTimeout(1000);
           }
           pageNumber++;
         }
