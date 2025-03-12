@@ -68,7 +68,7 @@ test('scrape nepal stock floor sheet', async ({ page }) => {
 
       if (!isLastPage) {
         await nextButton.click();
-        //await page.waitForTimeout(1000); 
+        await page.waitForTimeout(1000); 
       }
       pageNumber++;
     }
