@@ -11,7 +11,7 @@ cd Nepse-Scrapper
 ## Install NPM Files 
 ```bash
 
-npm install plawright
+npm install
 ```
 
 ## Install playwright browsers  
