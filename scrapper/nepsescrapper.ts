@@ -1,7 +1,6 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 
-const DATA_FILE_NAME = 'nepal_stock_floorsheet.json';
 const BASE_URL = 'https://www.nepalstock.com/floor-sheet';
 const PAGE_SIZE = '500';
 const TIMEOUT = 2000;
@@ -14,19 +13,10 @@ const SELECTORS = {
 
 // Timeout (20 minutes)
 const PROCESS_TIMEOUT = 1200000;
+const today = new Date().toISOString().split('T')[0];
+const DATA_FILE_NAME = `${today}_floorsheet.json`;
 
 let floorSheetData = [];
-
-const FloorSheetEntry = {
-  SN: '',
-  "Contract No.": '',
-  "Stock Symbol": '',
-  Buyer: '',
-  Seller: '',
-  Quantity: '',
-  "Rate (Rs)": '',
-  "Amount (Rs)": ''
-};
 
 async function scrapeNepseData() {
   const browser = await chromium.launch({ headless: false });
@@ -83,7 +73,7 @@ async function scrapeNepseData() {
             }
           });
 
-        //last page verification
+          // last page verification
           const nextButton = await page.locator(SELECTORS.nextButton);
           const isNextButtonDisabled = await nextButton.evaluate(button => button.classList.contains('disabled'));
           isLastPage = isNextButtonDisabled;
@@ -95,7 +85,7 @@ async function scrapeNepseData() {
           pageNumber++;
         }
 
-        //  save the data in bulk
+        // save the data in bulk
         fs.writeFileSync(DATA_FILE_NAME, JSON.stringify(floorSheetData, null, 2), 'utf8');
         console.log(`All data saved to ${DATA_FILE_NAME}`);
       })(),

@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import * as fs from 'fs';
 
 test('scrape nepal stock floor sheet', async ({ page }) => {
-  const dataFileName = 'nepal_stock_floorsheet.json';
+  const today = new Date().toISOString().split('T')[0];
+  const dataFileName = `${today}_floorsheet.json`;
 
   interface FloorSheetEntry {
     SN: string;
